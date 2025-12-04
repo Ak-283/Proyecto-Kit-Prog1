@@ -48,14 +48,16 @@ def menu_organizer():
     dry_run_input = get_valid_input("¿Modo simulación (dry-run)? (s/n): ", ["s", "n"])
     dry_run = dry_run_input == "s"
 
+    if opcion == "3":
+        pattern = get_valid_input("Ingrese el patrón Regex a buscar: ")
+        replacement = get_valid_input("Ingrese el reemplazo: ")
+
     with Spinner("Procesando..."):
         if opcion == "1":
             organizer.organize_by_extension(directory, dry_run)
         elif opcion == "2":
             organizer.organize_by_size(directory, dry_run)
         elif opcion == "3":
-            pattern = get_valid_input("Ingrese el patrón Regex a buscar: ")
-            replacement = get_valid_input("Ingrese el reemplazo: ")
             organizer.rename_by_pattern(directory, pattern, replacement, dry_run)
 
 

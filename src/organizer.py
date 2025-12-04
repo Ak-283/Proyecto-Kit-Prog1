@@ -100,7 +100,20 @@ def rename_by_pattern(directory, pattern, replacement, dry_run=False):
     else:
         print_info("\nRealizando cambios:")
         for src, dst in actions:
-            os.rename(src, dst)
-            print_info(f"Renombrado: {src} -> {dst}")
-        print_success(f"Se renombraron {len(actions)} archivos.")
+            if os.path.exists(dst):
+                base, ext = os.path.splitext(dst)
+                counter = 1
+                while os.path.exists(dst):
+                    dst = f"{base}_{counter}{ext}"
+                    counter += 1
+                print_warning(
+                    f"El archivo destino ya existe. Se renombrará a: {os.path.basename(dst)}"
+                )
+
+            try:
+                os.rename(src, dst)
+                print_info(f"Renombrado: {src} -> {dst}")
+            except OSError as e:
+                print_error(f"No se pudo renombrar {src} a {dst}: {e}")
+        print_success(f"Se procesaron {len(actions)} archivos.")
     return actions
