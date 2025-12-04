@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.spec
+
+# Logs
+logs/
+*.log
+
+# Reports
+reports/
+
+# Snapshots (generated data)
+snapshots/
+
+# Temporary test directories
+manual_test_regex/
+
+# Virtual Environment
+venv/
+env/
+.env
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Specific files to keep (un-ignore)
+!requirements.txt
+!tests_sample/**/*.txt
+!tests_sample/**/*.csv
+
