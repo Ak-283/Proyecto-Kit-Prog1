@@ -21,6 +21,13 @@ def organize_by_extension(directory, dry_run=False):
         if os.path.isfile(filepath):
             ext = filename.split(".")[-1] if "." in filename else "no_ext"
             target_folder = os.path.join(directory, ext)
+
+            if os.path.exists(target_folder) and not os.path.isdir(target_folder):
+                print_error(
+                    f"No se puede usar la carpeta '{ext}' porque existe un archivo con ese nombre. Saltando {filename}."
+                )
+                continue
+
             target_path = os.path.join(target_folder, filename)
 
             actions.append((filepath, target_path, target_folder))
@@ -34,6 +41,17 @@ def organize_by_extension(directory, dry_run=False):
         for src, dst, folder in actions:
             if not os.path.exists(folder):
                 os.makedirs(folder)
+
+            if os.path.exists(dst):
+                base, ext = os.path.splitext(dst)
+                counter = 1
+                while os.path.exists(dst):
+                    dst = f"{base}_{counter}{ext}"
+                    counter += 1
+                print_warning(
+                    f"El archivo destino ya existe. Se moverá a: {os.path.basename(dst)}"
+                )
+
             shutil.move(src, dst)
             print_info(f"Movido: {src} -> {dst}")
         print_success(f"Se organizaron {len(actions)} archivos por extensión.")
@@ -56,6 +74,13 @@ def organize_by_size(directory, dry_run=False):
                 folder_name = "Grande"
 
             target_folder = os.path.join(directory, folder_name)
+
+            if os.path.exists(target_folder) and not os.path.isdir(target_folder):
+                print_error(
+                    f"No se puede usar la carpeta '{folder_name}' porque existe un archivo con ese nombre. Saltando {filename}."
+                )
+                continue
+
             target_path = os.path.join(target_folder, filename)
             actions.append((filepath, target_path, target_folder))
 
@@ -68,6 +93,17 @@ def organize_by_size(directory, dry_run=False):
         for src, dst, folder in actions:
             if not os.path.exists(folder):
                 os.makedirs(folder)
+
+            if os.path.exists(dst):
+                base, ext = os.path.splitext(dst)
+                counter = 1
+                while os.path.exists(dst):
+                    dst = f"{base}_{counter}{ext}"
+                    counter += 1
+                print_warning(
+                    f"El archivo destino ya existe. Se moverá a: {os.path.basename(dst)}"
+                )
+
             shutil.move(src, dst)
             print_info(f"Movido: {src} -> {dst}")
         print_success(f"Se organizaron {len(actions)} archivos por tamaño.")
