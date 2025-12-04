@@ -1,0 +1,4 @@
+Hola, este es un archivo de prueba.
+Mi correo es ejemplo@test.com.
+La fecha de hoy es 27/11/2025.
+Otro correo: soporte@empresa.org

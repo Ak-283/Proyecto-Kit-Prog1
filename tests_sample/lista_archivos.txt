@@ -1,0 +1,4 @@
+imagen1.jpg
+imagen2.png
+documento.pdf
+script.py
