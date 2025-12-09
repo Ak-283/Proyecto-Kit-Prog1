@@ -1,6 +1,5 @@
 import json
 import os
-import time
 
 from src.utils import log_execution, print_success, print_warning
 
